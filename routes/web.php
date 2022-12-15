@@ -28,12 +28,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('posts', function() {
-    return view('posts.llistat');
-})->name('posts_llistat');
+Route::resource('posts', 'PostController')->only(['index', 'show','create','edit']);
 
-Route::get('posts/{id}', function($id) {
-    return view('posts.fitxa',compact('id'));
-})->where('id', "[0-9]+")->name('posts_fitxa');
 
 require __DIR__.'/auth.php';

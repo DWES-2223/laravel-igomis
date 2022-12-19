@@ -37,6 +37,7 @@ class RouteServiceProvider extends ServiceProvider
                 ->namespace('App\Http\Controllers')
                 ->group(base_path('routes/web.php'));
         });
+
     }
 
     /**

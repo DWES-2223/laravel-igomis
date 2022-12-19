@@ -101,6 +101,7 @@ class PostController extends Controller
 
     public function editarPrueba($id)
     {
+
         $x = rand();
         $post = Post::findOrFail($id);
         $post->titulo = 'Titulo '. $x;

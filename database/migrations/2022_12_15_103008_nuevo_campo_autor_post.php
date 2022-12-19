@@ -15,7 +15,7 @@ class NuevoCampoAutorPost extends Migration
     {
         Schema::table('posts', function (Blueprint $table) {
             $table->bigInteger('user_id')->unsigned()->nullable();
-            $table->foreign('user_id','postUserForeing')->references('id')->on('users');
+            $table->foreign('user_id','postUserForeing')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

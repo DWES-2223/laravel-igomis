@@ -18,8 +18,8 @@ class CreateComentariosTable extends Migration
             $table->text('contenido');
             $table->bigInteger('user_id')->unsigned();
             $table->bigInteger('post_id')->unsigned();
-            $table->foreign('user_id','ComentarioUserForeing')->references('id')->on('users');
-            $table->foreign('post_id','ComentarioPostForeing')->references('id')->on('posts');
+            $table->foreign('user_id','ComentarioUserForeing')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('post_id','ComentarioPostForeing')->references('id')->on('posts')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -34,4 +34,5 @@ Route::get('nuevoPrueba', 'PostController@nuevoPrueba')->name('nuevoPrueba');
 Route::get('editarPrueba/{id}', 'PostController@editarPrueba')->name('editarPrueba');
 
 Route::resource('posts', 'PostController');
+
 require __DIR__.'/auth.php';

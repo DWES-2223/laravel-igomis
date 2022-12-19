@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comentario;
+use App\Models\Post;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -9,11 +11,12 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function index()
     {
-        return view('posts.llistat');
+        $posts = Post::with('autor')->orderBy('titulo', 'ASC')->paginate(5);
+        return view('posts.index', compact('posts'));
     }
 
     /**
@@ -41,18 +44,19 @@ class PostController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function show($id)
     {
-        return view('posts.fitxa',compact('id'));
+        $post = Post::findOrFail($id);
+        return view('posts.show', compact('post'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function edit($id)
     {
@@ -75,10 +79,33 @@ class PostController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id)
     {
+        //Comentario::where('post_id', $id)->delete();
+        Post::findOrFail($id)->delete();
+        return redirect()->route('posts.index');
+    }
+
+    public function nuevoPrueba()
+    {
         //
+        $x = rand();
+        $post = new Post();
+        $post->titulo = 'Titulo '. $x;
+        $post->contenido = 'Contenido '. $x;
+        $post->save();
+        return redirect()->route('posts.show', $post->id);
+    }
+
+    public function editarPrueba($id)
+    {
+        $x = rand();
+        $post = Post::findOrFail($id);
+        $post->titulo = 'Titulo '. $x;
+        $post->contenido = 'Contenido '. $x;
+        $post->save();
+        return redirect()->route('posts.show', $post->id);
     }
 }
